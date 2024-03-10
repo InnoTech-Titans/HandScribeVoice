@@ -3,6 +3,27 @@ from PIL import Image
 import easyocr
 import pyttsx3
 from streamlit_drawable_canvas import st_canvas
+import requests
+api_key = "AIzaSyBh8NUavqlu9qadl7FjgP2Y1rMDpI0pJ8I"
+cx = "c5bc3c5d3db9e4084"
+
+
+def fetch_image_urls(query):
+    base_url = "https://www.googleapis.com/customsearch/v1"
+    params = {
+        "q": query,
+        "cx": cx,
+        "key": api_key,
+        "searchType": "image",
+    }
+
+    response = requests.get(base_url, params=params)
+    data = response.json()
+
+    # Extract image URLs from the response
+    image_urls = [item["link"] for item in data.get("items", [])]
+
+    return image_urls
 
 # Function to recognize text from image
 def recognize_text(image):
@@ -103,6 +124,15 @@ def main():
             # Combine recognized words and characters
             recognized_text = recognized_words if recognized_words else recognized_chars
             st.write("Recognized Text:", recognized_text)
+            
+            image_urls = fetch_image_urls(recognized_text)
+            image_url = image_urls[0]
+            print(image_url)
+            
+            st.image(
+            image_url,
+            width=400, # Manually Adjust the width of the image as per requirement
+        )
 
             # Speak out the recognized text with selected voice gender
             gender = 'male' if voice_gender == "Male" else 'female'
