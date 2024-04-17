@@ -4,7 +4,7 @@ import easyocr
 import pyttsx3
 from streamlit_drawable_canvas import st_canvas
 import requests
-api_key = "AIzaSyBh8NUavqlu9qadl7FjgP2Y1rMDpI0pJ8I"
+api_key = "AIzaSyDVxTej4dwhhFTaGRFHYHeuFwwxYBWaWE8"
 cx = "c5bc3c5d3db9e4084"
 
 
